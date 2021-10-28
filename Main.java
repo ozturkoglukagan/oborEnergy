@@ -1,23 +1,26 @@
-import java.io.BufferedOutputStream;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.rmi.server.SocketSecurityException;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 public class Main {
-
+    // taking the file destination from our user
     public static String fileDestination = "empty";
+    // holding the data which we are going to read from our dataset
     static List<String> dataHolder = new ArrayList<String>();
+    // keeping track of missing data
     public static String[] missingDataPositions = new String[1000];
+    // counting the line in main dataset
     public static int lineCount = 0;
+    // keeping the row count momentarily to compare to rowCount
     public static int momentaryRowCount = 0;
+    // counting the rows
     public static int rowCount = 0;
     public static int insideDataCount = 0;
     public static int borderDataCount = 0;
@@ -44,18 +47,12 @@ public class Main {
         readCSVFile(fileDestination);
         // stating the data count
         int yearlyDataCount = 8760 * 2;
-
-        System.out.println("started" + 1);
-        dataHolder.remove(0);
-        dataHolder.remove(0);
-        // deleteUsedData(yearlyDataCount);
-        System.out.println(dataHolder.get(0));
+        System.out.println("started");
         printData(yearlyDataCount);
-        System.out.println(dataHolder.get(0));
-        System.out.println("finished" + 1);
+        System.out.println("finished");
 
     }
-    
+
     // deleting the used data from our arrayList
     public static void deleteUsedData(int yearlyDataCount) {
         for (int i = 0; i < yearlyDataCount; i++) {
@@ -68,17 +65,22 @@ public class Main {
         // to arrange the filenames
         int fileCount = 2021;
 
-        // to try if our file reading algorithm works
-        int count = 0;
+        /*
+         * // to try if our file reading algorithm works int count = 0;
+         */
 
         // assigning the fileName variable
         String fileName;
+
+        // removing the date and energy price rows
+        dataHolder.remove(0);
+        dataHolder.remove(0);
 
         // using try catch to create the output file if not exist
         try {
 
             // while there is data remaining in our arraylist do this
-            while (dataHolder.size()!=0) {
+            while (dataHolder.size() != 0) {
 
                 // creating different files with filecount changing
                 fileName = "enPrice" + fileCount + ".csv";
@@ -108,7 +110,6 @@ public class Main {
                 // deleting used data from our list
                 deleteUsedData(yearlyDataCount);
                 fileCount++;
-                count++;
                 bf.close();
             }
 
@@ -198,6 +199,7 @@ public class Main {
 
     }
 
+    // printing our data to console
     public static void printDatatoConsole(int index) {
         System.out.println(dataHolder.get(index));
     }
