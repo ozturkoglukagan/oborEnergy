@@ -36,30 +36,41 @@ public class Main {
 
             }
         } catch (Exception e) {
-            // printing an error message to our user   
+            // printing an error message to our user
             System.out.println("Couldn't detect the file, please try again.");
 
         }
-        
-        readCSVFile(fileDestination);
 
+        readCSVFile(fileDestination);
+        // stating the data count
         int yearlyDataCount = 8760 * 2;
 
         System.out.println("started" + 1);
         dataHolder.remove(0);
         dataHolder.remove(0);
+        // deleteUsedData(yearlyDataCount);
+        System.out.println(dataHolder.get(0));
         printData(yearlyDataCount);
         System.out.println(dataHolder.get(0));
         System.out.println("finished" + 1);
 
+    }
+    
+    // deleting the used data from our arrayList
+    public static void deleteUsedData(int yearlyDataCount) {
+        for (int i = 0; i < yearlyDataCount; i++) {
+            dataHolder.remove(0);
+        }
     }
 
     public static void printData(int yearlyDataCount) {
 
         // to arrange the filenames
         int fileCount = 2021;
+
         // to try if our file reading algorithm works
         int count = 0;
+
         // assigning the fileName variable
         String fileName;
 
@@ -67,26 +78,35 @@ public class Main {
         try {
 
             // while there is data remaining in our arraylist do this
-            while (/* dataHolder.size()!=0 */ count < 3) {
+            while (dataHolder.size()!=0) {
+
                 // creating different files with filecount changing
                 fileName = "enPrice" + fileCount + ".csv";
+
                 // to write our data to CSV files defining it in while loop to avoid creating
                 // multiple writers
                 BufferedWriter bf = new BufferedWriter(new FileWriter(new File(fileName)));
+
                 // using for loop the control how many variables we are going to print
                 int index = 0;
                 for (; index < yearlyDataCount;) {
+
                     // printing in indexes
                     bf.write(dataHolder.get(index));
+
                     // using append ',' to write into the next cell
                     bf.append(',');
                     index++;
                     bf.write(dataHolder.get(index));
+
                     // using append '\n' to write cells in new line
                     bf.append('\n');
                     index++;
 
                 }
+
+                // deleting used data from our list
+                deleteUsedData(yearlyDataCount);
                 fileCount++;
                 count++;
                 bf.close();
